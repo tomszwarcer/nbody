@@ -10,22 +10,42 @@ matplotlib.use('Agg')
 def plotter(body_list):
     filenames = []
     calc_time = 0
-    colours = np.array(list(mcolors.BASE_COLORS.values()))
     max_frames = 250
+
+    # calculate total mass and energy
+    total_mass = 0
+    
+    for body in body_list:
+        total_mass += body.mass
+        
+
+
     for frame in range(max_frames):
-        plt.axis("off")
-        plt.xlim([-2,2])
-        plt.ylim([-2,2])
-        colour_index = 0
+        # actual calculation is done here
+        calc_time += update_all(body_list)
+
+        fig, ax = plt.subplots(nrows=1, ncols=1,figsize=(16/2,9/2))
+        plt.tight_layout()
+        fig.patch.set_facecolor('k')
+        ax.axis('off')
+        limit = 2
+        ax.set_xlim([-1*limit,limit])
+        ax.set_ylim([(-9/16)*limit,(9/16)*limit])
+
+        total_energy = 0
+
         for body in body_list:
-            plt.scatter(body.position[0],body.position[1],s=[50], color=colours[colour_index % 8])
-            plt.scatter(np.transpose(body.path)[0],np.transpose(body.path)[1],s=0.3*np.ones(len(np.transpose(body.path)[1])),marker='.', color=colours[colour_index % 8])
-            colour_index += 1
+            total_energy += body.energy
+            ax.scatter(body.position[0],body.position[1],s=[300*np.sqrt(body.mass/total_mass)], color='w')
+            ax.scatter(np.transpose(body.path)[0],np.transpose(body.path)[1],s=0.3*np.ones(len(np.transpose(body.path)[1])),marker='.', color='w')
+        
+        ax.text(1.2,0.85,"E = "+str(round(total_energy)),color='w')
         name = "./output/" + str(frame) + ".png"
         filenames.append(name)
-        plt.savefig(name)
+        fig.savefig(name, dpi = 120)
         plt.close()
-        calc_time += update_all(body_list)
+
+        
     print("Calculation time: " + str(calc_time) + "s\n")
     return filenames
 

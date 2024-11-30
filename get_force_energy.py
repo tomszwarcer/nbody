@@ -3,7 +3,7 @@ from get_distances import get_distances
 from get_mass_products import get_mass_products
 from body import Body
 
-def get_net_forces(body_list):
+def get_force_energy(body_list):
 
     n = len(body_list)
     G = 1
@@ -20,7 +20,9 @@ def get_net_forces(body_list):
     distance_magnitudes = distance_magnitudes + np.identity(n)
     
     # create matrix of mass product combinations
-    force_magnitudes = G*get_mass_products(body_list)/distances_squared
+    mass_products = get_mass_products(body_list)
+
+    force_magnitudes = G*mass_products/distances_squared
     forces = force_magnitudes/distance_magnitudes
     forces = forces[:,:,np.newaxis]*distances
     
@@ -28,4 +30,17 @@ def get_net_forces(body_list):
     for i in range(n):
         net_force[i] = np.sum(np.array([j for j in forces[i]]),axis=0)
 
-    return net_force
+    # energy calculation (room for optimisation)
+
+    
+
+    v_squared = np.array([np.sqrt(np.dot(j.velocity,j.velocity)) for j in body_list])
+    mass_list = np.array([j.mass for j in body_list])
+
+    KE = 0.5*v_squared*mass_list
+    PE = -1*G*(np.sum(mass_products/distance_magnitudes,axis=1))
+    total_energy = KE+PE
+    
+    
+
+    return net_force, total_energy
