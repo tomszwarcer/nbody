@@ -19,3 +19,14 @@ def get_distances(body_list):
     distances = distances - np.transpose(distances, (1,0,2))
     return distances
 
+def process_distances(body_list):
+    distances = get_distances(body_list)
+    distances_squared = np.sum(distances*distances,axis=2)
+    distance_magnitudes = np.sqrt(distances_squared)
+
+    # add the identity to prevent nan (this won't affect anything)
+    distances_squared = distances_squared + np.identity(len(body_list))
+    distance_magnitudes = distance_magnitudes + np.identity(len(body_list))
+
+    return distances, distances_squared, distance_magnitudes
+

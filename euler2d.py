@@ -1,7 +1,7 @@
 import numpy as np
-import time
-from body import Body
-from get_force_energy import *
+from get_force import *
+from get_energy import *
+from get_distances import *
 
 def update_path(body_list):
     # updates path for orbit 'trail' in animation
@@ -9,13 +9,10 @@ def update_path(body_list):
     for body in body_list:
         body.path = np.vstack((body.path,body.position))
 
-def update_accel_energy(body_list):
-    # updates acceleration using net force
-    net_forces, total_energy = get_force_energy(body_list)
+def update_accel(body_list, G):
+    net_forces = get_force(body_list, G)
     for body_index in range(len(body_list)):
         body_list[body_index].acceleration = net_forces[body_index]/body_list[body_index].mass
-        body_list[body_index].energy = total_energy[body_index]
-
 
 def update_velocity(body_list, dt):
     # updates velocity using acceleration
@@ -29,20 +26,19 @@ def update_position(body_list, dt):
     for body in body_list:
         body.position += body.velocity*dt
 
-def update_all(body_list):
-    t0 = time.process_time()
 
+
+def euler(body_list, G):
     # timestep
     dt = 0.001
 
     update_path(body_list)
-    update_accel_energy(body_list)
+    update_accel(body_list,G)
+    total_energy = get_energy(body_list,G)
     update_velocity(body_list, dt)
     update_position(body_list, dt)
 
-    t1 = time.process_time()
-    return t1-t0
-
+    return total_energy
     
 
 

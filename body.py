@@ -7,4 +7,3 @@ class Body:
         self.mass = mass
         self.acceleration = np.zeros(2)
         self.path = np.zeros(2)
-        self.energy = 0.0
