@@ -21,6 +21,7 @@ def plotter(body_list):
 
 
     for frame in range(max_frames):
+        print("Frame " + str(frame+1) + "/" + str(max_frames))
         # actual calculation is done here
         calc_time += update_all(body_list)
 
@@ -28,7 +29,7 @@ def plotter(body_list):
         plt.tight_layout()
         fig.patch.set_facecolor('k')
         ax.axis('off')
-        limit = 2
+        limit = 10
         ax.set_xlim([-1*limit,limit])
         ax.set_ylim([(-9/16)*limit,(9/16)*limit])
 
@@ -36,7 +37,7 @@ def plotter(body_list):
 
         for body in body_list:
             total_energy += body.energy
-            ax.scatter(body.position[0],body.position[1],s=[300*np.sqrt(body.mass/total_mass)], color='w')
+            ax.scatter(body.position[0],body.position[1],s=[50*np.sqrt(body.mass/total_mass)], color='w')
             ax.scatter(np.transpose(body.path)[0],np.transpose(body.path)[1],s=0.3*np.ones(len(np.transpose(body.path)[1])),marker='.', color='w')
         
         ax.text(1.2,0.85,"E = "+str(round(total_energy)),color='w')
@@ -62,5 +63,5 @@ def make_gif(body_list):
     t1 = time.process_time()
     print("Total time: " + str(t1-t0) + "s\n")
 
-body_list = [Body([0,0],[0,0],300),Body([3,-0.9],[-34,0],11),Body([1,0],[0,-14.6],0.5)]
-make_gif(body_list)
+#body_list = [Body([0,0],[0,0],300),Body([3,-0.9],[-34,0],11),Body([1,0],[0,-14.6],0.5)]
+#make_gif(body_list)

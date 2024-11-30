@@ -6,7 +6,7 @@ from body import Body
 def get_force_energy(body_list):
 
     n = len(body_list)
-    G = 1
+    G = 5
 
     forces = np.zeros((n,n,2))
     force_magnitudes = np.zeros((n,n))
@@ -31,8 +31,6 @@ def get_force_energy(body_list):
         net_force[i] = np.sum(np.array([j for j in forces[i]]),axis=0)
 
     # energy calculation (room for optimisation)
-
-    
 
     v_squared = np.array([np.sqrt(np.dot(j.velocity,j.velocity)) for j in body_list])
     mass_list = np.array([j.mass for j in body_list])
