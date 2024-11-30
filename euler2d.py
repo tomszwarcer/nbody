@@ -1,4 +1,5 @@
 import numpy as np
+import time
 
 class Body:
     def __init__(self,position,velocity,mass):
@@ -82,7 +83,8 @@ def update_position(body_list, dt):
         body.position += body.velocity*dt
 
 def update_all(body_list):
-
+    t0 = time.process_time()
+    
     # timestep
     dt = 0.005
 
@@ -90,6 +92,9 @@ def update_all(body_list):
     update_accel(body_list)
     update_velocity(body_list, dt)
     update_position(body_list, dt)
+
+    t1 = time.process_time()
+    return t1-t0
 
     
 

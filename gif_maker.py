@@ -3,10 +3,12 @@ import matplotlib.pyplot as plt
 import matplotlib
 import matplotlib.colors as mcolors
 import imageio
+import time
 matplotlib.use('Agg')
 
 
 def plotter(body_list):
+    calc_time = 0
     filenames = []
     colours = np.array(list(mcolors.BASE_COLORS.values()))
     max_frames = 500
@@ -23,7 +25,8 @@ def plotter(body_list):
             filenames.append(name)
             plt.savefig(name)
             plt.close()
-            update_all(body_list)
+            calc_time += update_all(body_list)
+    print("Calculation time: " + str(calc_time) + "s\n")
     return filenames
 
 def combiner(filenames):
@@ -34,8 +37,11 @@ def combiner(filenames):
                 writer.append_data(image)
 
 def make_gif(body_list):
+    t0 = time.process_time()
     filenames = plotter(body_list)
     combiner(filenames)
+    t1 = time.process_time()
+    print("Total time: " + str(t1-t0) + "s\n")
 
 body_list = [Body([0,0],[0,0],300),Body([5,-1],[-24,0],1),Body([-1,0],[0,13],1)]
 make_gif(body_list)
