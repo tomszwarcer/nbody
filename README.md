@@ -1,0 +1,1 @@
+An inefficient n-body sim to learn about numerical methods.
