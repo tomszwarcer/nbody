@@ -5,7 +5,7 @@ import numpy as np
 import time
 from vverlet2d import *
 
-def simulate(n, G, num_frames, dt, collision_distance):
+def simulate(n, G, num_frames, dt, softening):
 
     # simulate the bodies
     t0 = time.process_time()
@@ -20,14 +20,14 @@ def simulate(n, G, num_frames, dt, collision_distance):
     body_list.append(Body(initial_positions[0],initial_velocities[0],100))
     body_list.append(Body(initial_positions[1],initial_velocities[1],1))'''
 
-    initial_positions = np.random.uniform(-6,6,(n,2))
+    initial_positions = np.random.multivariate_normal([0,0],[[200,0],[0,200]],n)
     initial_velocities = np.zeros_like(initial_positions)
     for i in range(n):
-        body_list.append(Body(initial_positions[i],initial_velocities[i],5))
+        body_list.append(Body(initial_positions[i],initial_velocities[i],25))
 
     positions,velocities,accelerations,mass_vector, mass_products = setup_verlet(body_list)
     for frame in range(num_frames):
-        total_energy, total_momentum, positions, velocities, accelerations = step(positions,velocities,accelerations,dt,G,collision_distance,mass_vector,mass_products)
+        total_energy, total_momentum, positions, velocities, accelerations = step(positions,velocities,accelerations,dt,G,mass_vector,mass_products, softening)
         update_path(body_list,positions)
         update_energy_history(energy_history,total_energy, frame)
         update_momentum_history(momentum_history,total_momentum, frame)
@@ -57,4 +57,4 @@ def update_momentum_history(momentum_history, total_momentum, frame):
     momentum_history[frame] = total_momentum
 
 
-simulate(40, 1, 100, 0.01, 1)
+simulate(100, 1, 400, 0.01, 0.2)

@@ -7,3 +7,4 @@ euler2d.py
 .DS_Store
 verlet2d.py
 merge_handler.py
+collision_handler.py

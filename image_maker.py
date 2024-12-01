@@ -7,13 +7,13 @@ def make_images(body_list, num_frames, energy_history):
     plt.tight_layout()
     fig.patch.set_facecolor('k')
     ax.axis('off')
-    limit = 20
+    limit = 40
     ax.set_xlim([-1*limit,limit])
     ax.set_ylim([(-9/16)*limit,(9/16)*limit])
     fig.canvas.draw_idle()
 
    
-    lines = [ax.scatter([],[],s=[5], color='w', animated = True) for body in body_list]
+    lines = [ax.scatter([],[],s=[1], color='w', animated = True) for body in body_list]
     text = ax.text(limit - 2,(9/16)*limit-0.5,"test", color = "w",animated = True)
 
     for frame in range(num_frames):

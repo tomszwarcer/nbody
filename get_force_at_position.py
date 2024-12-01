@@ -2,7 +2,7 @@ import numpy as np
 from get_distances import *
 from get_mass_products import *
 
-def get_force(position, G, mass_vector):
+def get_force(position, G, mass_vector, softening):
 
     mass_products = get_mass_products(mass_vector)
     n = len(position)
@@ -12,7 +12,7 @@ def get_force(position, G, mass_vector):
 
     distances, distances_squared, distance_magnitudes = process_distances(position)
 
-    force_magnitudes = G*mass_products/distances_squared
+    force_magnitudes = G*mass_products/(distances_squared + (softening*np.ones((len(position),len(position)))))
     forces = force_magnitudes/distance_magnitudes
     forces = forces[:,:,np.newaxis]*distances
     
