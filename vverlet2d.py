@@ -26,9 +26,9 @@ def setup_verlet(body_list):
 def update_position(positions, velocities, accelerations, dt):
     positions += dt*velocities + 0.5*dt*dt*accelerations
 
-def update_acceleration(positions, velocities, accelerations, mass_vector, mass_products, G, collision_distance):
-    net_forces, force_magnitudes = get_force(positions, G, mass_products)
-    collision_handler(mass_vector, velocities, positions, net_forces, force_magnitudes, collision_distance)
+def update_acceleration(positions, velocities, accelerations, mass_vector, G, collision_distance):
+    net_forces, force_magnitudes = get_force(positions, G, mass_vector)
+    #collision_handler(mass_vector, velocities, positions, net_forces, force_magnitudes, collision_distance)
     avg_accel = 0.5*(accelerations + net_forces/mass_vector[:,np.newaxis])
     accelerations = net_forces/mass_vector[:,np.newaxis]
     return avg_accel, accelerations
@@ -50,9 +50,14 @@ def update_energy(positions, velocities, mass_vector, mass_products, G):
 
 def step(positions,velocities,accelerations,dt,G,collision_distance,mass_vector,mass_products):
     update_position(positions,velocities,accelerations,dt)
-    avg_accel, accelerations = update_acceleration(positions, velocities, accelerations, mass_vector, mass_products, G, collision_distance)
+    avg_accel, accelerations = update_acceleration(positions, velocities, accelerations, mass_vector, G, collision_distance)
     update_velocity(velocities, avg_accel, dt)
+
     total_energy = update_energy(positions, velocities, mass_vector, mass_products, G)
-    return total_energy, positions, velocities, accelerations
+
+    body_momenta = mass_vector[:,np.newaxis]*velocities
+    total_momentum_vector = np.sum(body_momenta, axis=0)
+    total_momentum = np.sqrt(np.dot(total_momentum_vector,total_momentum_vector))
+    return total_energy, total_momentum, positions, velocities, accelerations
 
 

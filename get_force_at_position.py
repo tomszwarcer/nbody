@@ -2,8 +2,9 @@ import numpy as np
 from get_distances import *
 from get_mass_products import *
 
-def get_force(position, G, mass_products):
+def get_force(position, G, mass_vector):
 
+    mass_products = get_mass_products(mass_vector)
     n = len(position)
 
     forces = np.zeros((n,n,2))

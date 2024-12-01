@@ -7,7 +7,7 @@ def make_images(body_list, num_frames, energy_history):
     plt.tight_layout()
     fig.patch.set_facecolor('k')
     ax.axis('off')
-    limit = 10
+    limit = 20
     ax.set_xlim([-1*limit,limit])
     ax.set_ylim([(-9/16)*limit,(9/16)*limit])
     fig.canvas.draw_idle()
@@ -19,7 +19,7 @@ def make_images(body_list, num_frames, energy_history):
     for frame in range(num_frames):
         print("Frame " + str(frame+1) + "/" + str(num_frames))
 
-        text.set_text("E = "+str(round(energy_history[frame])))
+        text.set_text("p = "+str(round(energy_history[frame])))
         ax.draw_artist(text)
         
         for (line,body) in zip(lines,body_list):
@@ -28,6 +28,6 @@ def make_images(body_list, num_frames, energy_history):
 
         filename = "./output/" + str(frame) + ".png"
         filenames.append(filename)
-        fig.savefig(filename, dpi = 50)
+        fig.savefig(filename, dpi = 150)
 
     return filenames
