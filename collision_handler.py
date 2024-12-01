@@ -14,10 +14,10 @@ def collision_handler(mass_vector, velocities, positions, net_force, force_magni
 
 
                 # update positions to move them outside the collision region. Broken, but maybe necessary for small dt.
-                #position_correction(body_list,i,j,distances[i][j], distance_magnitudes[i][j],collision_distance)
+                #position_correction(positions,i,j,distances[i][j], distance_magnitudes[i][j],collision_distance)
 
                 # room for optimisation as can calculate separation vector and denominator without having to get distances again
-                #distances, distances_squared, distance_magnitudes = process_distances(body_list)
+                #distances, distances_squared, distance_magnitudes = process_distances(positions)
 
                 # formula taken from wikipedia (https://en.wikipedia.org/wiki/Elastic_collision#Two-dimensional)
                 velocity_list = np.array([velocities[i],velocities[j]])
@@ -33,8 +33,7 @@ def collision_handler(mass_vector, velocities, positions, net_force, force_magni
                 velocities[i] = velocity_list[0]
                 velocities[j] = velocity_list[1]
 
-def position_correction(body_list,i,j, separation_vector, magnitude, collision_distance):
-    # broken, needs updating
+def position_correction(positions ,i,j, separation_vector, magnitude, collision_distance):
 
     # sep. vect. is x2-x1
 
@@ -42,8 +41,8 @@ def position_correction(body_list,i,j, separation_vector, magnitude, collision_d
 
     # move 1st in direction of x1-x2
     k1 = (-1*separation_vector/magnitude)*((collision_distance/2)-magnitude+tolerance)
-    body_list[i].position += k1
+    positions[i] += k1
 
     # move 2nd in direction of x2-x1
     k2 = (separation_vector/magnitude)*((collision_distance/2)-magnitude+tolerance)
-    body_list[j].position += k2
+    positions[j] += k2
