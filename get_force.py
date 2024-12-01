@@ -22,4 +22,4 @@ def get_force(body_list, G):
     for i in range(n):
         net_force[i] = np.sum(np.array([j for j in forces[i]]),axis=0)
 
-    return net_force
+    return net_force, force_magnitudes

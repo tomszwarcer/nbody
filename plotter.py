@@ -13,7 +13,7 @@ def plotter(body_list, energy, plot_trails, frame):
     ax.set_ylim([(-9/16)*limit,(9/16)*limit])
 
     for body in body_list:
-        ax.scatter(body.path[frame][0],body.path[frame][1],s=[30], color='w')
+        ax.scatter(body.path[frame][0],body.path[frame][1],s=[10], color='w')
         if plot_trails:
             ax.scatter(np.transpose(body.path)[0],np.transpose(body.path)[1],s=0.3*np.ones(len(np.transpose(body.path)[1])),marker='.', color='w')
     ax.text(limit - 2,(9/16)*limit-0.5,"E = " + str(round(energy)),color = 'w')
