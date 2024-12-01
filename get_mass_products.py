@@ -1,14 +1,14 @@
 import numpy as np
 from body import Body
 
-def get_mass_products(body_list):
-    n = len(body_list)
+def get_mass_products(mass_vector):
+    n = len(mass_vector)
     products = np.zeros((n,n))
     for i in range(n-1):
         for j in range(i+1,n):
-            products[i][j] = body_list[i].mass*body_list[j].mass
+            products[i][j] = mass_vector[i]*mass_vector[j]
 
-    # populate rest of array with the inverted distances
+    # populate rest of array
     products = products + np.transpose(products)
     return products
 

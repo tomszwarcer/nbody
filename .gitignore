@@ -1,3 +1,7 @@
 test.py
 __pycache__
 image_maker_parallel.py
+get_force.py
+get_energy.py
+euler2d.py
+.DS_Store

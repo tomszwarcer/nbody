@@ -1,18 +1,15 @@
 import numpy as np
 from get_distances import *
 from get_mass_products import *
-from body import Body
 
-def get_force(body_list, G):
+def get_force(position, G, mass_products):
 
-    n = len(body_list)
+    n = len(position)
 
     forces = np.zeros((n,n,2))
     force_magnitudes = np.zeros((n,n))
 
-    distances, distances_squared, distance_magnitudes = process_distances(body_list)
-
-    mass_products = get_mass_products(body_list)
+    distances, distances_squared, distance_magnitudes = process_distances(position)
 
     force_magnitudes = G*mass_products/distances_squared
     forces = force_magnitudes/distance_magnitudes
@@ -23,3 +20,5 @@ def get_force(body_list, G):
         net_force[i] = np.sum(np.array([j for j in forces[i]]),axis=0)
 
     return net_force, force_magnitudes
+
+
