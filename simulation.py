@@ -1,11 +1,13 @@
 from image_maker import *
 from image_combiner import *
-from body import Body
+from body import *
 import numpy as np
 import time
 from vverlet2d import *
 
 def simulate(n, G, num_frames, dt, softening):
+
+    path = Path(num_frames, n)
 
     # simulate the bodies
     t0 = time.process_time()
@@ -28,7 +30,7 @@ def simulate(n, G, num_frames, dt, softening):
     positions,velocities,accelerations,mass_vector, mass_products = setup_verlet(body_list)
     for frame in range(num_frames):
         total_energy, total_momentum, positions, velocities, accelerations = step(positions,velocities,accelerations,dt,G,mass_vector,mass_products, softening)
-        update_path(body_list,positions)
+        update_path(path,positions, frame)
         update_energy_history(energy_history,total_energy, frame)
         update_momentum_history(momentum_history,total_momentum, frame)
     t1 = time.process_time()
@@ -36,7 +38,7 @@ def simulate(n, G, num_frames, dt, softening):
 
     # generate the images
     t0 = time.process_time()
-    filenames = make_images(body_list, num_frames, momentum_history)
+    filenames = make_images(path, num_frames, momentum_history)
     t1 = time.process_time()
     print("Drawing time: "+ str(t1-t0) + "s")
 
@@ -46,9 +48,10 @@ def simulate(n, G, num_frames, dt, softening):
     t1 = time.process_time()
     print("Combining time: "+ str(t1-t0) + "s")
     
-def update_path(body_list, body_positions):
-    for body_index in range(len(body_list)):
-        body_list[body_index].path = np.vstack((body_list[body_index].path, body_positions[body_index]))
+def update_path(path, body_positions, frame):
+    path.x[frame] = body_positions
+    path.y[frame] = body_positions
+
 
 def update_energy_history(energy_history,total_energy, frame):
     energy_history[frame] = total_energy
