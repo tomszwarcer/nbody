@@ -11,7 +11,7 @@ def simulate(n, G, collision_distance, plot_trails, num_frames):
     # simulate the bodies
     t0 = time.process_time()
     body_list = []
-    positions = np.random.multivariate_normal([0,0],[[3,0],[0,3]],n)
+    positions = np.random.multivariate_normal([0,0],[[9,0],[0,3]],n)
     velocities = 2*np.random.multivariate_normal([0,0],[[3,0],[0,3]],n)
     for i in range(n):
         body_list.append(Body(positions[i],velocities[i],i+1))
@@ -32,4 +32,4 @@ def simulate(n, G, collision_distance, plot_trails, num_frames):
     t1 = time.process_time()
     print("Combining time: "+ str(t1-t0) + "s")
     
-simulate(30, 1, 0.05, False, 200)
+simulate(80, 1, 0.05, False, 200)
