@@ -1,7 +1,7 @@
 from simulation import *
 import numpy as np
 
-def accretion_disk(n,G,num_frames,dt,softening):
+def accretion_disk(n,G,num_frames,dt,softening,trail_length):
 
     body_list = []
     
@@ -37,4 +37,4 @@ def accretion_disk(n,G,num_frames,dt,softening):
     #Central body
     body_list.append(Body([0,0],[0,0],22500,50))
 
-    simulate(n,G,num_frames,dt,softening,body_list)
+    simulate(n,G,num_frames,dt,softening,body_list,trail_length)

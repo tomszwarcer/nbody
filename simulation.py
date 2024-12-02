@@ -6,7 +6,7 @@ import numpy as np
 import time
 from vverlet2d import *
 
-def simulate(n, G, num_frames, dt, softening, body_list):
+def simulate(n, G, num_frames, dt, softening, body_list, trail_length):
 
     # simulate the bodies
     t0 = time.process_time()
@@ -32,7 +32,7 @@ def simulate(n, G, num_frames, dt, softening, body_list):
     # generate the images
     t0 = time.process_time()
     size_list = create_size_list(body_list)
-    filenames = make_images(path, num_frames, momentum_history, size_list)
+    filenames = make_images(path, num_frames, momentum_history, size_list, trail_length)
     t1 = time.process_time()
     print("Drawing time: "+ str(t1-t0) + "s")
 
@@ -44,8 +44,8 @@ def simulate(n, G, num_frames, dt, softening, body_list):
     
 
 def update_path(path, body_positions, frame):
-    path.x[frame] = body_positions
-    path.y[frame] = body_positions
+    path.x[frame] = body_positions[:,0]
+    path.y[frame] = body_positions[:,1]
 
 
 def update_energy_history(energy_history,total_energy, frame):

@@ -1,11 +1,11 @@
 import numpy as np
 from simulation import *
 
-def solar_system(n,G,num_frames,dt,softening):
+def solar_system(n,G,num_frames,dt,softening,trail_length):
     body_list = []
  
     # n body setup
-    r = np.random.uniform(2,39,n)
+    r = np.random.uniform(5,45,n)
     theta = np.random.uniform(0,2*np.pi,n)
 
     initial_positions = np.zeros((n,2))
@@ -25,9 +25,9 @@ def solar_system(n,G,num_frames,dt,softening):
 
     # creates bodies from initial positions
     for i in range(n):
-        body_list.append(Body(initial_positions[i],initial_velocities[i],1,1))
+        body_list.append(Body(initial_positions[i],initial_velocities[i],1,5))
 
     #Central body
-    body_list.append(Body([0,0],[0,0],22500,50))
+    body_list.append(Body([0,0],[0,0],22500,100))
 
-    simulate(n,G,num_frames,dt,softening,body_list)
+    simulate(n,G,num_frames,dt,softening,body_list,trail_length)
