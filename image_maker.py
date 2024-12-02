@@ -10,9 +10,7 @@ def make_images(path, num_frames, energy_history):
     limit = 40
     ax.set_xlim([-1*limit,limit])
     ax.set_ylim([-1*limit,limit])
-
    
-    #lines = [ax.scatter([],[],s=[1], color='w', animated = True) for body in body_list]
     text = ax.text(limit - 10,limit-5,"test", color = "w",animated = True)
 
     for frame in range(num_frames):

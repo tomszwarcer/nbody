@@ -5,7 +5,7 @@ from get_force_at_position import *
 
 
 
-# set up Verlet integration
+# populate vectors from body list
 def setup_verlet(body_list):
     mass_vector = np.array([body.mass for body in body_list])
     mass_products = get_mass_products(mass_vector)
@@ -46,6 +46,7 @@ def update_energy(positions, velocities, mass_vector, mass_products, G, softenin
 
     return total_energy
 
+# do the complete update process at each step
 def step(positions,velocities,accelerations,dt,G,mass_vector,mass_products, softening):
     update_position(positions,velocities,accelerations,dt)
     avg_accel, accelerations = update_acceleration(positions, accelerations, mass_vector, G, softening)
@@ -55,7 +56,7 @@ def step(positions,velocities,accelerations,dt,G,mass_vector,mass_products, soft
 
     body_momenta = mass_vector[:,np.newaxis]*velocities
     total_momentum_vector = np.sum(body_momenta, axis=0)
-    total_momentum = np.sqrt(np.dot(total_momentum_vector,total_momentum_vector))
-    return total_energy, total_momentum, positions, velocities, accelerations
+    total_momentum_magnitude = np.sqrt(np.dot(total_momentum_vector,total_momentum_vector))
+    return total_energy, total_momentum_magnitude, positions, velocities, accelerations
 
 

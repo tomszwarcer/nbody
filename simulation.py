@@ -8,28 +8,32 @@ from vverlet2d import *
 
 def simulate(n, G, num_frames, dt, softening):
 
+    # used to track positions for plotting
     path = Path(num_frames, n)
 
     # simulate the bodies
     t0 = time.process_time()
 
+    # E/p tracking
     energy_history = np.zeros(num_frames)
     momentum_history = np.zeros(num_frames)
 
     body_list = []
     
+    # 2 body setup
     '''initial_positions = np.array([[0,0],[1,0]])
     initial_velocities = np.array([[0,0],[0,-10]])
     body_list.append(Body(initial_positions[0],initial_velocities[0],100))
     body_list.append(Body(initial_positions[1],initial_velocities[1],1))'''
 
+    # n body setup
     r = np.random.uniform(0,26,n)
     theta = np.random.uniform(0,2*np.pi,n)
 
     initial_positions = np.zeros((n,2))
     initial_velocities = np.zeros_like(initial_positions)
 
-    # rotation code
+    # rotation of cloud
     for i in range(n): 
         initial_positions[i] = r[i]*np.array([np.cos(theta[i]), np.sin(theta[i])])
         if np.pi/2 > theta[i] > 0:
@@ -41,10 +45,11 @@ def simulate(n, G, num_frames, dt, softening):
         else:
             initial_velocities[i] = r[i]*np.array([np.cos(theta[i]-1.5*np.pi),np.sin(theta[i]-1.5*np.pi)])
 
-
+    # creates bodies from initial positions
     for i in range(n):
         body_list.append(Body(initial_positions[i],initial_velocities[i],25))
 
+    # actual simulation done here
     positions,velocities,accelerations,mass_vector, mass_products = setup_verlet(body_list)
     for frame in range(num_frames):
         print("Simulating frame " + str(frame) + "/" + str(num_frames))
@@ -67,6 +72,7 @@ def simulate(n, G, num_frames, dt, softening):
     t1 = time.process_time()
     print("Combining time: "+ str(t1-t0) + "s")
     
+
 def update_path(path, body_positions, frame):
     path.x[frame] = body_positions
     path.y[frame] = body_positions
@@ -78,5 +84,5 @@ def update_energy_history(energy_history,total_energy, frame):
 def update_momentum_history(momentum_history, total_momentum, frame):
     momentum_history[frame] = total_momentum
 
-
+# n, G, num_frames, dt, softening
 simulate(250, 1, 400, 0.01, 0.2)

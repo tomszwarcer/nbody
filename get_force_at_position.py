@@ -2,9 +2,12 @@ import numpy as np
 from get_distances import *
 from get_mass_products import *
 
+# The force between the ith and the jth body is stored as the i,j element of
+# an nxn matrix
 def get_force(position, G, mass_vector, softening):
 
     mass_products = get_mass_products(mass_vector)
+
     n = len(position)
 
     forces = np.zeros((n,n,2))
