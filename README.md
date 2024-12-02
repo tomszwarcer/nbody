@@ -4,4 +4,6 @@ To run, adjust parameters in run.py and run it.
 
 ---
 
-![Example interaction](./output/movies/accretion_disk.gif)
+![Accretion disk](./output/movies/accretion_disk.gif)
+![Solar system](./output/movies/solar_system.gif)
+![Binary system](./output/movies/two_body.gif)
