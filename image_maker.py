@@ -7,7 +7,7 @@ def make_images(path, num_frames, energy_history, size_list):
     plt.tight_layout()
     fig.patch.set_facecolor('k')
     ax.axis('off')
-    limit = 40
+    limit = max(path.x[0][:,0])+5
     ax.set_xlim([-1*limit,limit])
     ax.set_ylim([-1*limit,limit])
    
