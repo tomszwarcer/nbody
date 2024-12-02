@@ -1,6 +1,6 @@
-An inefficient n-body sim to learn about numerical methods.
+An inefficient Verlet n-body sim to learn about numerical methods.
 
-- Verlet integration
+To run, adjust parameters in simulation.py 
 
 ---
 

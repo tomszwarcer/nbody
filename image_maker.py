@@ -1,7 +1,7 @@
 import matplotlib.pyplot as plt
 import matplotlib
 matplotlib.use('Agg')
-def make_images(path, num_frames, energy_history):
+def make_images(path, num_frames, energy_history, size_list):
     filenames = []
     fig, ax = plt.subplots(nrows=1, ncols=1,figsize=(8,8))
     plt.tight_layout()
@@ -16,7 +16,7 @@ def make_images(path, num_frames, energy_history):
     for frame in range(num_frames):
         fig.canvas.draw_idle()
         print("Drawing frame " + str(frame+1) + "/" + str(num_frames))
-        s = ax.scatter(path.x[frame][:,0], path.y[frame][:,1], s=[1], color='w')
+        s = ax.scatter(path.x[frame][:,0], path.y[frame][:,1], s=size_list, color='w')
 
         text.set_text("p = "+str(round(energy_history[frame])))
         ax.draw_artist(text)
