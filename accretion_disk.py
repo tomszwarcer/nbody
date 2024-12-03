@@ -5,14 +5,8 @@ def accretion_disk(n,G,num_frames,dt,softening,trail_length):
 
     body_list = []
     
-    # 2 body setup
-    '''initial_positions = np.array([[0,0],[1,0]])
-    initial_velocities = np.array([[0,0],[0,-10]])
-    body_list.append(Body(initial_positions[0],initial_velocities[0],100))
-    body_list.append(Body(initial_positions[1],initial_velocities[1],1))'''
-
     # n body setup
-    r = np.random.uniform(9,29,n)
+    r = np.random.uniform(8,32,n)
     theta = np.random.uniform(0,2*np.pi,n)
 
     initial_positions = np.zeros((n,2))

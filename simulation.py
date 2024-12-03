@@ -9,7 +9,7 @@ from vverlet2d import *
 def simulate(n, G, num_frames, dt, softening, body_list, trail_length):
 
     # simulate the bodies
-    t0 = time.process_time()
+    t0 = time.time()
 
     # E/p tracking
     energy_history = np.zeros(num_frames)
@@ -26,20 +26,20 @@ def simulate(n, G, num_frames, dt, softening, body_list, trail_length):
         update_path(path,positions, frame)
         update_energy_history(energy_history,total_energy, frame)
         update_momentum_history(momentum_history,total_momentum, frame)
-    t1 = time.process_time()
+    t1 = time.time()
     print("Simulation time: "+ str(t1-t0) + "s")    
 
     # generate the images
-    t0 = time.process_time()
+    t0 = time.time()
     size_list = create_size_list(body_list)
     filenames = make_images(path, num_frames, momentum_history, size_list, trail_length)
-    t1 = time.process_time()
+    t1 = time.time()
     print("Drawing time: "+ str(t1-t0) + "s")
 
     # combine the images
-    t0 = time.process_time()
+    t0 = time.time()
     image_combiner(filenames)
-    t1 = time.process_time()
+    t1 = time.time()
     print("Combining time: "+ str(t1-t0) + "s")
     
 

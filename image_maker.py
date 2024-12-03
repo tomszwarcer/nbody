@@ -31,6 +31,7 @@ def make_images(path, num_frames, energy_history, size_list, trail_length):
         filenames.append(filename)
         fig.savefig(filename, dpi = 150)
         plot_bodies.remove()
-        plot_trails.remove()
+        if trail_length > 0:
+            plot_trails.remove()
 
     return filenames
