@@ -1,4 +1,4 @@
-An inefficient Verlet n-body sim to learn about numerical methods.
+A Verlet n-body sim to learn about numerical methods. I may update it to use Barnes-Hut in future.
 
 To run, adjust parameters in run.py and run it.
 
